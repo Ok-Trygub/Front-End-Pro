@@ -1,7 +1,7 @@
 // Task #1
 
 let admin;
-let name = 'Джон';
+const name = 'Джон';
 
 admin = name;
 
@@ -18,7 +18,7 @@ let currentUserName = "Кcения";
 
 //Task #3
 
-let sum = '10' + 10;
+const sum = '10' + 10;
 console.log(sum, typeof sum);
 
 /*
