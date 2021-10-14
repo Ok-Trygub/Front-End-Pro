@@ -11,8 +11,8 @@ alert(admin);
 //Task #2 
 
 /*
-let ourPlanetName = "Земля";
-let currentUserName = "Кcения";
+const ourPlanetName = "Земля";
+const currentUserName = "Кcения";
 */
 
 
