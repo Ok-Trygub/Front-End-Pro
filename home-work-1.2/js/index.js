@@ -12,8 +12,8 @@ console.log(resultOfAddition);
 //Using Number() 
 
 /*
-let num1ForAddition = Number(prompt("Give me the first operand"));
-let num2ForAddition = Number(prompt("Give me the second operand"));
+const num1ForAddition = Number(prompt("Give me the first operand"));
+const num2ForAddition = Number(prompt("Give me the second operand"));
 
 const resultOfAddition = num1ForAddition + num2ForAddition;34
 
