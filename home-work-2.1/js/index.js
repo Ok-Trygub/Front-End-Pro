@@ -26,6 +26,6 @@ let salaries = {
 	Pete: 130
 }
 
-const sum = (salaries.John + salaries.Ann + salaries.Pete);
+const sum = salaries.John + salaries.Ann + salaries.Pete;
 
 console.log(sum);
