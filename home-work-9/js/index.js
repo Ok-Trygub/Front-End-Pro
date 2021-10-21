@@ -10,6 +10,8 @@ if (yearOfBirth > 1900 && yearOfBirth < 2020) {
 	alert('Год рождения должен быть не менее, чем 1900 год. Попробуйте снова.');
 } else if (yearOfBirth >= 2020) {
 	alert('Вы слишком малы или не родились, чтобы это писать...');
+} else if (isNaN(+yearOfBirth)) {
+	alert('Год рождения должен состоять только из цифр...');
 } else if (yearOfBirth === null || yearOfBirth.trim() === '') {
 	alert('Жаль, что Вы не захотели ввести свой год рождения...');
 }
