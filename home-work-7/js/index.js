@@ -32,3 +32,19 @@ switch (isNaN(numOrStr)) {
 		alert('Very good!');
 		break;
 }
+
+switch (true) {
+	case numOrStr === null:
+		alert('Error. Null');
+		break;
+	case numOrStr.trim() === '':
+		alert('Error. Empty String');
+		break;
+	case isNaN(numOrStr):
+		alert('Error. Input only number.');
+		break;
+	default:
+		alert('Very good!');
+		break;
+}
+
