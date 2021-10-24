@@ -1,10 +1,8 @@
 const num = prompt('Введите число:');
 let flag = true;
 
-if (num === null) {
-	console.log('Ошибка. Введите число заново.');
-} else if (num.trim() === '') {
-	console.log('Ошибка. Пустая строка.');
+if (!num) {
+	console.log('Жаль, что Вы не захотели ввести число.');
 } else if (isNaN(+num)) {
 	console.log('Ошибка. Введите число заново.');
 } else if (+num === 1) {
@@ -12,8 +10,8 @@ if (num === null) {
 } else if (+num === 0) {
 	console.log('0 - не является натуральным числом и, соответственно, не является ни простым, ни составным.');
 } else {
-	for (let a = 2; a < +num; a++) {
-		if (+num % a === 0) {
+	for (let a = 2; a < num; a++) {
+		if (num % a === 0) {
 			flag = false;
 			break;
 		}
