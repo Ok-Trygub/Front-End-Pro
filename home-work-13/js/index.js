@@ -9,15 +9,15 @@ if (!num) {
 } else if (+num < 1) {
 	console.log('NaN');
 } else {
-	for (let a = 2; a <= num; a++) {
+	for (let a = 2; a < num; a++) {
 		if (num % a === 0) {
 			console.log(`${num} - составное число с минимальным делителем ${a}`);
-			break;
-		}
-
-		if (num % a !== 0) {
+		} else {
 			console.log(`${num} - простое число`);
-			break;
 		}
+		break;
 	}
 }
+
+
+
