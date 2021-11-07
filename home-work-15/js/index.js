@@ -1,32 +1,37 @@
 const str = prompt("Input some word/words:", "hello");
 const num = prompt("Input length of str:", "2");
 const symb = prompt("Input some symbol:", "*");
-const bool = prompt("Input true/false:", "true");
+const side = prompt("Input true/false:", "true");
 
-function padString(str, num, symb, bool) {
-  if (!str && !num && !symb && !bool) {
-    return "Error. Try again.";
-  } else if (!str || str.trim() === "") {
-    return "Error. Need input some word";
-  } else if (!num || num.trim() === "") {
-    return "Error. Need input length of str";
-  } else if (!symb || symb.trim() === "") {
-    return "Error. Need input some symbol";
-  } else if (!bool || bool.trim() === "") {
-    return "Error. Need input true/false";
-  } else {
+function padString (str, num, symb, side = true) {
+	if (!str && !num && !symb && !side) {
+		return "Error. Try again.";
+	} else if (!str || str.trim() === "") {
+		return "Error. Need input some word";
+	} else if (!num || num.trim() === "" || !(+num)) {
+		return "Error. Need input correct length of str";
+	} else if (!symb || symb.trim() === "") {
+		return "Error. Need input some symbol";
+	} else if (!side || side.trim() === "") {
+		return "Error. Need input 'true' or 'false'";
+	}
 
-return str + symb
+	if (side === "true") {
+		side = true;
+	} else {
+		side = false;
+	}
 
+	if ((+num) > str.length) {
+		num -= str.length;
 
-
-
-
-
-
-
-  }
+		for (let i = 0; i < (+num); i++) {
+			side ? str += symb[0] : str = symb[0] + str;
+		}
+	} else {
+		str = str.substr(0, +num);
+	}
+	return str;
 }
 
-let result = padString(str, num, symb, bool).substr(+num);
-console.log(result);
+console.log(padString(str, num, symb, side));
