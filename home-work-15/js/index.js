@@ -1,32 +1,33 @@
 const str = prompt("Input some word/words:", "hello");
-const num = prompt("Input length of str:", "2");
+let num = +prompt("Input length of str:", "2");
 const symb = prompt("Input some symbol:", "*");
-const bool = prompt("Input true/false:", "true");
+let side = prompt("Input true/false:", "true");
 
-function padString(str, num, symb, bool) {
-  if (!str && !num && !symb && !bool) {
-    return "Error. Try again.";
-  } else if (!str || str.trim() === "") {
-    return "Error. Need input some word";
-  } else if (!num || num.trim() === "") {
-    return "Error. Need input length of str";
-  } else if (!symb || symb.trim() === "") {
-    return "Error. Need input some symbol";
-  } else if (!bool || bool.trim() === "") {
-    return "Error. Need input true/false";
-  } else {
+if (str === null || str.trim() === "") alert("Error. Need input some word");
 
-return str + symb
+if (!num) alert("Please input length of str.");
 
+if (symb.length !== 1 || !symb || symb.trim() === "") alert("You need input one symbol");
 
-
-
-
-
-
-
-  }
+if (side === "true") {
+  side = true;
+} else if (side === "false") {
+  side = false;
+} else {
+  alert("Error. Need input 'true' or 'false'");
 }
 
-let result = padString(str, num, symb, bool).substr(+num);
-console.log(result);
+function padString(str, num, symb, side = true) {
+  if (num > str.length) {
+    num -= str.length;
+
+    for (let i = 0; i < num; i++) {
+      side ? (str += symb) : (str = symb + str);
+    }
+  } else {
+    str = str.substr(0, num);
+  }
+  return str;
+}
+
+console.log(padString(str, num, symb, side));
