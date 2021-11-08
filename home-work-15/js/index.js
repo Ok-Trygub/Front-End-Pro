@@ -31,4 +31,3 @@ function padString (str, num, symb, side = true) {
 }
 
 console.log(padString(str, num, symb, side));
-0
