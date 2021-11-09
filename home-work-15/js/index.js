@@ -1,7 +1,9 @@
+
 const str = prompt("Input some word/words:", "hello");
 let num = +prompt("Input length of str:", "2");
 const symb = prompt("Input some symbol:", "*");
 let side = prompt("Input true/false:", "true");
+
 
 if (str === null || str.trim() === "") alert("Error. Need input some word");
 
@@ -17,9 +19,7 @@ if (side === "true") {
 	alert("Error. Need input 'true' or 'false'");
 }
 
-
 function padString (str, num, symb, side = true) {
-
 	if (num > str.length) {
 		num -= str.length;
 		for (let i = 0; i < num; i++) {
