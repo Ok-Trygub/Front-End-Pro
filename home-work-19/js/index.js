@@ -147,18 +147,3 @@ function negNumbers (num) {
 };
 const countsOfNegativeNumbers = arr.filter(negNumbers);
 alert(countsOfNegativeNumbers.length);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
