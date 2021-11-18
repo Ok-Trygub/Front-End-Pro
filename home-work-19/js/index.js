@@ -62,6 +62,9 @@ alert(arr);
 
 const arr = [1, 2, 3, 4, 5];
 const newArr = arr.splice(1, 3);  //if necessary cut values from arr
+
+//or 
+
 const newArr = arr.slice(1, 4);  //if necessary copy values from arr
 
 alert(newArr);
@@ -79,15 +82,6 @@ const arr = [1, 2, 3, 4, 5];
 arr.splice(1, 0, "a", "b");
 arr.splice(6, 0, "c");
 arr.splice(8, 0, "e");
-
-alert(arr);
-
-// or
-
-const arr = [1, 2, 3, 4, 5];
-arr.splice(1, 0, "a", "b");
-arr.splice(6, 0, "c");
-arr.splice([arr.length], 0, "e");
 
 alert(arr);
 
