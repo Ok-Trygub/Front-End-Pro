@@ -1,54 +1,54 @@
 // #1 indexOf()
 
-// const arr = [12, 77, null, 11, "hi", 12, 77, null, 11, "hi", NaN];
+const arr = [12, 77, null, 11, "hi", 12, 77, null, 11, "hi", NaN];
 
-// function indexOf (item, from = 0) {
-// 	if (from < 0) from = 0;
+function indexOf (item, from = 0) {
+	if (from < 0) from = 0;
 
-// 	if (from >= arr.length) {
-// 		return - 1;
-// 	} else {
-// 		for (let i = from; i < arr.length; i++) {
-// 			if (arr[i] === item) return [i];
-// 		}
-// 	}
-// 	return -1;
-// }
+	if (from >= arr.length) {
+		return - 1;
+	} else {
+		for (let i = from; i < arr.length; i++) {
+			if (arr[i] === item) return [i];
+		}
+	}
+	return -1;
+}
 
-// console.log(indexOf(11));
+console.log(indexOf(11));
 
 // #2 lastIndexOf()
 
-// const arr = [12, 77, null, 11, "hi", 12, 77, null, 11, "hi", NaN];
+const arr = [12, 77, null, 11, "hi", 12, 77, null, 11, "hi", NaN];
 
-// function lastIndexOf (item, from = 0) {
-// 	if (from < 0) from = 0;
+function lastIndexOf (item, from = 0) {
+	if (from < 0) from = 0;
 
-// 	for (let i = arr.length - 1; i > from; i--) {
-// 		if (arr[i] === item) return [i];
-// 	}
-// 	return -1;
-// }
+	for (let i = arr.length - 1; i > from; i--) {
+		if (arr[i] === item) return [i];
+	}
+	return -1;
+}
 
-// console.log(lastIndexOf(11, -4));
+console.log(lastIndexOf(11, -4));
 
 // #3 includes()
 
-// const arr = [12, 77, null, 11, "hi", NaN];
+const arr = [12, 77, null, 11, "hi", NaN];
 
-// function includes (item, from = 0) {
-// 	if (from >= 0) {
-// 		for (let i = from; i < arr.length; i++) {
-// 			if (arr[i] === item || Number.isNaN(arr[i])) return true;
-// 		}
-// 	} else if (from < 0) {
-// 		for (let i = arr.length + from; i < arr.length; i++) {
-// 			if (arr[i] === item) return true;
-// 		}
-// 	}
-// 	return - 1
-// }
-// console.log(includes(77, -5));
+function includes (item, from = 0) {
+	if (from >= 0) {
+		for (let i = from; i < arr.length; i++) {
+			if (arr[i] === item || Number.isNaN(arr[i])) return true;
+		}
+	} else if (from < 0) {
+		for (let i = arr.length + from; i < arr.length; i++) {
+			if (arr[i] === item) return true;
+		}
+	}
+	return - 1
+}
+console.log(includes(77, -5));
 
 // #4 find()
 
@@ -58,60 +58,80 @@ function find (cb, array) {
 	let value = undefined;
 
 	for (let i = 0; i < array.length; i++) {
-		if (cb(array[i], i, array)) value = array[i];
+		if (cb(array[i], i, array)) {
+			value = array[i];
+			return value;
+		}
 	}
-
-	return value;
 }
 
 function cb (value, index, array) {
- if (value < 0) return true;
+	if (value < 0) return true;
 }
 
 console.log(find(cb, arr));
 
 // #5 findIndex()
 
-// const arr = [1, 2, 3, -4, 5];
+const arr = [1, 2, 3, -4, 5, -6];
 
-// function findIndex (cb, array) {
-// 	let value = -1;
+function findIndex (cb, array) {
+	let value = -1;
 
-// 	for (let i = 0; i < array.length; i++) {
-// 		if (cb(array[i], i, array)) value = i;
-// 	}
+	for (let i = 0; i < array.length; i++) {
+		if (cb(array[i], i, array)) {
+			value = i;
+			return value;
+		}
+	}
+}
 
-// 	return value;
-// }
+function cb (value, index, array) {
+	if (value < 0) return true;
+}
 
-// function cb (value, index, array) {
-//  if (value < 0) return true;
-// }
-
-// console.log(findIndex(cb, arr));
+console.log(findIndex(cb, arr));
 
 // #6 every()
 
-// const arr = [1, 2, 3, -4, 5];
+const arr = [1, 2, 3, -4, 5];
 
-// function every (cb, array) {
-// 	let value = false;
+function every (cb, array) {
+	let value = true;
 
-// 	for (let i = 0; i < array.length; i++) {
-// 		if (cb(array[i], i, array)) value = true;
-// 	}
-// 	return value;
-// }
+	for (let i = 0; i < array.length; i++) {
+		if (cb(array[i], i, array) === false) {
+			value = false;
+			return value;
+		}
+	}
+	return value;
+}
 
-// function cb (value, index, array) {
-//  if (value > 0) {
-// 	return true;
-//  } else {
-// 	 return false;
-//  }
-// }
+function cb (value, index, array) {
+	if (value < 0) return false;
+}
 
-// console.log(every(cb, arr));
+console.log(every(cb, arr));
 
+// #7 some()
 
+const arr = [1, 2, 3, 4, -5];
 
+function every (cb, array) {
+
+	let value = false;
+	for (let i = 0; i < array.length; i++) {
+		if (cb(array[i], i, array)) {
+			value = true;
+			return value;
+		}
+	}
+	return value;
+}
+
+function cb (value, index, array) {
+	if (value < 0) return true;
+}
+
+console.log(every(cb, arr));
