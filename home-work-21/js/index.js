@@ -43,12 +43,12 @@ function includes (item, from = 0) {
 		}
 	} else if (from < 0) {
 		for (let i = arr.length + from; i < arr.length; i++) {
-			if (arr[i] === item) return true;
+		return arr[i] === item;
 		}
 	}
 	return - 1
 }
-console.log(includes(77, -5));
+console.log(includes(77));
 
 // #4 find()
 
@@ -66,7 +66,7 @@ function find (cb, array) {
 }
 
 function cb (value, index, array) {
-	if (value < 0) return true;
+	return value < 0;
 }
 
 console.log(find(cb, arr));
@@ -87,7 +87,7 @@ function findIndex (cb, array) {
 }
 
 function cb (value, index, array) {
-	if (value < 0) return true;
+	return value < 0;
 }
 
 console.log(findIndex(cb, arr));
@@ -109,10 +109,11 @@ function every (cb, array) {
 }
 
 function cb (value, index, array) {
-	if (value < 0) return false;
+	return value < 0;
 }
 
 console.log(every(cb, arr));
+
 
 // #7 some()
 
@@ -131,7 +132,7 @@ function every (cb, array) {
 }
 
 function cb (value, index, array) {
-	if (value < 0) return true;
+	return value < 0;
 }
 
 console.log(every(cb, arr));
