@@ -17,25 +17,5 @@
 
 
 
-function sum (num = 0) {
-  let accum = 0;
 
-  if (typeof(num) !== 'number' || isNaN(num) === true) return; //почему не проходит проверка на undefined?
-
-  function add() {
-    return accum += num;
-  }
-  return add();
-}
-
-
-
-const result = sum(4)
-console.log(result)
-
-const secondResult = sum(2)
-console.log(secondResult)
-
-// const lastResult = sum(3)
-// console.log(lastResult)
 
