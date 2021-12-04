@@ -34,7 +34,7 @@ function insertWordInto(str) {
 const result = insertWordInto('0000 0000 0000 0000');
 
 for (let i = 0; i < 15; i++) {
-    if (i % 5 === 0) console.log('----')
+    if (i % 5 === 0) console.log('----');
     console.log(result('|||||'));
 }
 
