@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="script.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="script.js" working-dir="$PROJECT_DIR$/scripts">
+    <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
+      <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+    </EXTENSION>
+    <method v="2" />
+  </configuration>
+</component>
