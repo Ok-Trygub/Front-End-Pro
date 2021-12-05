@@ -114,7 +114,6 @@ function cb (value, index, array) {
 
 console.log(every(cb, arr));
 
-
 // #7 some()
 
 const arr = [1, 2, 3, 4, -5];
@@ -134,5 +133,4 @@ function every (cb, array) {
 function cb (value, index, array) {
 	return value < 0;
 }
-
 console.log(every(cb, arr));
