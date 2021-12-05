@@ -134,5 +134,4 @@ function cb (value, index, array) {
 	return value < 0;
 }
 
-
 console.log(every(cb, arr));
