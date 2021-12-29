@@ -1,23 +1,19 @@
-function createTable(){
-  let tableStart = document.createElement('table');
-  document.body.append(tableStart);
-    console.log(document.body.childNodes);
+function createTable() {
+	const elementWrapper = document.querySelector('.itemsList');
+	let counter = 1;
+	const tableStart = document.createElement('table');
 
-for(let a = 0; a < 10; a++){
-    let tr = document.createElement('tr');
-    document.body.append(a);
-    
-    for (let b = 0; b < 10; b++){
-        let td = document.createElement('td');
-        document.body.append(b);
-    }
-  
+	elementWrapper.append(tableStart);
 
+	for (let b = 0; b < 10; b++) {
+		const tr = document.createElement('tr');
+		tableStart.append(tr);
 
-
+		for (let a = 0; a < 10; a++) {
+			const td = document.createElement('td');
+			tr.append(td);
+			td.innerHTML = `${counter++}`;
+		}
+	}
 }
-
-
-}
-
 createTable();

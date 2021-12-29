@@ -1,25 +1,31 @@
-function generateList(array){
-  let ul = document.createElement('ul');
-let li = null;
+function generateList(arr, listWrapper) {
 
-for(let i = 0; i < array.length; i++){
-    let list;
-    
-    if (Array.isArray(array[i])) {
-        childElement = generateList(arr[i]);
-      } else {
-        childElement = document.createTextNode(arr[i])
-      }
-      li.appendChild(childElement);
-ul.appendChild(li);
+	function createList(arr) {
+		const list = document.createElement('ul');
 
+		for (let i = 0; i < arr.length; i++) {
+			const li = document.createElement('li');
+
+			if (Array.isArray(arr[i])) {
+				li.append(createList(arr[i]));
+			} else {
+				li.innerHTML = arr[i];
+			}
+
+			list.append(li);
+		}
+
+		return list;
+	}
+
+
+	listWrapper.append(createList(arr));
 }
-return ul
-//   console.log(ul.textContent)
-}
 
-
-
+generateList(
+	[1, 2, 3, [1, 2, 3, 4], 4, 5],
+	document.querySelector('.itemsList')
+)
 
 
 
