@@ -24,7 +24,6 @@ const ulObj = {
 ulObj.getUlProperties(ulAttrs);
 
 
-
 const myName = 'Ksenia';
 
 function changeElemContent(elem, name){
@@ -44,7 +43,6 @@ function setAttr(elem, attrName, attrValue){
   setAttr(ul, 'data-my-name', myName);
 
 
-  
  function removeAttr(elem, attrName){
     elem.removeAttribute(attrName);
     console.log(elem);
