@@ -5,7 +5,7 @@ function createResult() {
 		const ul = document.createElement('ul');
 		resultWrapper.append(ul);
 
-		let parsedData = JSON.parse(localStorage.formData);
+		const parsedData = JSON.parse(localStorage.formData);
 		console.log(parsedData);
 
 		for (let key in parsedData) {
