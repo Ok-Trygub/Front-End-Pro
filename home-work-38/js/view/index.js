@@ -57,6 +57,7 @@ const view = {
     console.log(data);
 
     data.id = this.formId;
+		data.completed = false;
 
     this.controller.setData(data, this.formId);
 
