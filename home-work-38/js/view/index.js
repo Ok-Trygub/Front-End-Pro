@@ -2,156 +2,165 @@
 
 "use strict";
 const view = {
-  controller: null,
-  formId: null,
-  todosContainerId: null,
-  form: null,
-  todoContainer: null,
-  currentItemId: 0,
-  removeAllBtn: null,
+	controller: null,
+	formId: null,
+	todosContainerId: null,
+	form: null,
+	todoContainer: null,
+	currentItemId: 0,
+	removeAllBtn: null,
 
-  getId(objKey, Id) {
-    if (!Id) throw new Error("No ID!");
-    this[objKey] = Id;
-  },
+	getObjKeyValues(formId, containerId) {
+		if (!formId) throw new Error("No formId!");
+		if (!containerId) throw new Error("No containerId!");
 
-  getElement(objKey, elemId) {
-    if (!elemId) throw new Error("No element ID!");
-    this[objKey] = document.getElementById(elemId);
-  },
+		this.formId = formId;
+		this.containerId = containerId;
+
+		this.form = document.getElementById(formId);
+		if (this.form.nodeName !== 'FORM') throw new Error('There is no such form on the page');
+
+		this.todoContainer = document.getElementById(containerId);
+
+	},
+
 
 	getRemoveAllBtn() {
 		this.removeAllBtn = this.form.querySelector('.remove-all');
-},
+	},
 
-  setEvents() {
-    this.form.addEventListener(
-			"submit", 
-		this.formHandler.bind(this)
+	setEvents() {
+		this.form.addEventListener(
+			"submit",
+			this.formHandler.bind(this)
 		);
 
-    this.todoContainer.addEventListener(
-      "change",
-      this.checkTodoItem.bind(this)
-    );
+		document.addEventListener(
+			'DOMContentLoaded',
+			this.prefillData.bind(this)
+		);
+
+		this.todoContainer.addEventListener(
+			"change",
+			this.checkTodoItem.bind(this)
+		);
 
 		this.todoContainer.addEventListener(
 			'click',
 			this.removeElement.bind(this)
-  	),
+		),
 
-	  this.removeAllBtn.addEventListener(
-		'click',
-		this.removeAll.bind(this)
-    )
-  },
+			this.removeAllBtn.addEventListener(
+				'click',
+				this.removeAll.bind(this)
+			)
+	},
 
-  formHandler(event) {
-    event.preventDefault();
-    ++this.currentItemId;
 
-    const data = this.findInputsData();
-    console.log(data);
+	prefillData() {
+		const data = this.controller.getData(this.formId);
 
-    data.itemId = this.currentItemId;
-    console.log(data);
+		if (!data || data.length === 0) return;
 
-    data.id = this.formId;
+		this.currentItemId = data[data.length - 1].itemId;
+
+		data.forEach((toDoItem) => {
+			this.todoContainer.prepend(this.createTemplate(toDoItem));
+		});
+	},
+
+
+	formHandler(event) {
+		event.preventDefault();
+		++this.currentItemId;
+
+		const data = this.findInputsData();
+		console.log(data);
+
+		data.itemId = this.currentItemId;
+		console.log(data);
+
+		data.id = this.formId;
+		console.log(data)
 		data.completed = false;
 
-    this.controller.setData(data, this.formId);
+		this.controller.setData(data);
 
-    this.todoContainer.prepend(this.createTemplate(data));
-    event.target.reset();
-  },
+		this.todoContainer.prepend(this.createTemplate(data));
+		event.target.reset();
+	},
 
-  prefillData() {
-    const data = this.controller.getData(this.formId);
 
-    if (data === null || data.length === 0) return;
+	checkTodoItem({ target }) {
+		const itemId = target.getAttribute('data-item-id');
+		const status = target.checked;
 
-    this.currentItemId = data[data.length - 1].itemId;
+		this.controller.changeCompleted(
+			itemId,
+			this.formId,
+			status
+		);
+	},
 
-    data.forEach((toDoItem) => {
-      this.todoContainer.prepend(this.createTemplate(toDoItem));
-    });
-  },
+	removeElement({ target }) {
+		if (!target.classList.contains('delete-btn')) return;
 
-  	checkTodoItem({target}) {
-  		const itemId = target.getAttribute('data-item-id');
-  		console.log(itemId);
-			console.log(target);
-  		const status = target.checked;
+		this.controller.removeElement(
+			target.getAttribute('data-item-id'),
+			this.formId
+		)
 
-  		this.controller.changeCompleted(
-  				itemId,
-  				this.formId,
-  				status
-  		);
-  },
+		target.closest('.taskWrapper').parentElement.remove()
+	},
 
-  removeElement({ target }) { 
-				 if(!target.classList.contains('delete-btn')) return;
-		
-  		this.controller.removeElement(
-  			target.getAttribute('data-item-id'), 
-  			this.formId
-  		)
+	removeAll() {
+		this.controller.removeAll(this.formId);
+		this.todoContainer.innerHTML = '';
+	},
 
-  		target.closest('.taskWrapper').parentElement.remove()
-  	},
+	findInputsData() {
+		return Array.from(
+			this.form.querySelectorAll("input[type=text], textarea")
+		).reduce((acc, item) => {
+			acc[item.name] = item.value;
+			return acc;
+		}, {});
+	},
 
-  	removeAll() {
-  		this.controller.removeAll(this.formId);
-  		this.todoContainer.innerHTML = '';
-  	},
+	createTemplate({ title, description, itemId, completed }) {
+		const wrapper = document.createElement("div");
+		wrapper.classList.add("col-4");
 
-  findInputsData() {
-    return Array.from(
-      this.form.querySelectorAll("input[type=text], textarea")
-    ).reduce((acc, item) => {
-      acc[item.name] = item.value;
-      return acc;
-    }, {});
-  },
+		let wrapInnerContent = '<div class="taskWrapper">';
+		wrapInnerContent += `<div class="taskHeading">${title}</div>`;
+		wrapInnerContent += `<div class="taskDescription">${description}</div>`;
 
-  createTemplate({ title, description, itemId, completed }) {
-    const wrapper = document.createElement("div");
-    wrapper.classList.add("col-4");
+		wrapInnerContent += `<hr>`;
+		wrapInnerContent += `<label class="completed form-check">`;
 
-    let wrapInnerContent = '<div class="taskWrapper">';
-    wrapInnerContent += `<div class="taskHeading">${title}</div>`;
-    wrapInnerContent += `<div class="taskDescription">${description}</div>`;
+		wrapInnerContent += `<input data-item-id="${itemId}" type="checkbox" class="form-check-input" >`;
+		wrapInnerContent += `<span>Завершено ?</span>`;
+		wrapInnerContent += `</label>`;
 
-    wrapInnerContent += `<hr>`;
-    wrapInnerContent += `<label class="completed form-check">`;
+		wrapInnerContent += `<hr>`;
+		wrapInnerContent += `<button class="btn btn-danger delete-btn" data-item-id="${itemId}">Удалить</button>`;
 
-    wrapInnerContent += `<input data-item-id="${itemId}" type="checkbox" class="form-check-input" >`;
-    wrapInnerContent += `<span>Завершено ?</span>`;
-    wrapInnerContent += `</label>`;
+		wrapInnerContent += "</div>";
 
-    wrapInnerContent += `<hr>`;
-    wrapInnerContent += `<button class="btn btn-danger delete-btn" data-item-id="${itemId}">Удалить</button>`;
+		wrapper.innerHTML = wrapInnerContent;
 
-    wrapInnerContent += "</div>";
+		wrapper.querySelector("input[type=checkbox]").checked = completed;
 
-    wrapper.innerHTML = wrapInnerContent;
+		return wrapper;
+	},
 
-    wrapper.querySelector("input[type=checkbox]").checked = completed;
+	init(controllerInstance) {
+		this.controller = controllerInstance;
 
-    return wrapper;
-  },
-
-  init(controllerInstance) {
-    this.controller = controllerInstance;
-
-    this.getId("formId", "todoForm");
-    this.getId("todosContainerId", "todoItems");
-    this.getElement("form", this.formId);
-    this.getElement("todoContainer", this.todosContainerId);
+		this.getObjKeyValues('todoForm', 'todoItems');
 		this.getRemoveAllBtn();
 		this.setEvents();
 		this.prefillData();
- 
-  },
+
+	},
 };
