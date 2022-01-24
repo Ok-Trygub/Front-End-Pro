@@ -1,10 +1,8 @@
-// Controller
-
 "use strict";
 
 function controller(view, model) {
   return {
-    setData(data) {
+    saveData(data) {
       if (!this.validateData(data)) throw new Error("Validation Error!");
       model.setData(data);
     },
@@ -18,26 +16,26 @@ function controller(view, model) {
       return true;
     },
 
-    	getData(dbKey) {
-    		if (!dbKey) throw new Error('Database key is not defined');
-
-    		return model.getData(dbKey);
-    	},
-
-    	changeCompleted(itemId, dbKey, status) {
-    		if(!itemId) throw new Error('itemId is not defined');
-
-    		model.changeCompleted(itemId, dbKey, status);
+    getData(dbKey) {
+      if (!dbKey) throw new Error("Database key is not defined");
+      return model.getData(dbKey);
     },
 
-    	removeElement(elementId, dbKey) {
-    		if (!elementId) throw new Error('No element!')
+    changeCompleted(itemId, dbKey, status) {
+      if (!itemId) throw new Error("itemId is not defined");
 
-    		return model.deleteItem(elementId, dbKey);
-    	},
+      model.changeCompleted(itemId, dbKey, status);
+    },
 
-    	removeAll(dbKey) {
-    	return	model.clearStorage(dbKey);
-    }
+    removeItem(dbKey, itemId) {
+      if (!itemId) throw new Error("No id provided");
+
+      model.removeItem(dbKey, itemId);
+    },
+
+    removeAll(dbKey) {
+      model.clearStorage(dbKey);
+    },
   };
 }
+

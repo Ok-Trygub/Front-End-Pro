@@ -1,68 +1,51 @@
-// Model
-
 'use strict';
 
 const model = {
-	controller: null,
+  controller: null,
 
-	getData(id) {
-		return JSON.parse(
-				localStorage.getItem(id)
-		)
-},
+  setData(data) {
+    const dbKey = data.id;
+    delete data.id;
 
-	setData(data) {
-		const keyInDB = data.id;
-		delete data.id;
+    if (!localStorage[dbKey]) {
+      return localStorage.setItem(dbKey, JSON.stringify([data]));
+    }
 
-		if(!localStorage.getItem(keyInDB)) {
-				localStorage.setItem(
-						keyInDB,
-						JSON.stringify([data])
-				);
-				return;
-		}
+    let existingData = JSON.parse(localStorage.getItem(dbKey));
+    existingData.push(data);
 
-		const currentData = JSON.parse(localStorage.getItem(keyInDB));
-		currentData.push(data);
-		localStorage.setItem(
-				keyInDB,
-				JSON.stringify(currentData)
-		);
+    localStorage.setItem(dbKey, JSON.stringify(existingData));
+  },
 
-},
+  getData(dbKey) {
+    return JSON.parse(localStorage.getItem(dbKey));
+  },
 
-	changeCompleted(itemId, dbKey, status) {
-		const data = JSON.parse(localStorage.getItem(dbKey));
-		const currentItem = data.find(todoItem => todoItem.itemId === +itemId);
+  removeItem(dbKey, itemId) {
+    const data = JSON.parse(localStorage.getItem(dbKey));
+    const currentItemIndex = data.findIndex(
+      (todoItem) => todoItem.itemId === +itemId
+    );
 
-		currentItem.completed = status;
+    data.splice(currentItemIndex, 1);
 
-		localStorage.setItem(
-				dbKey,
-				JSON.stringify(data)
-		)
-},
+    localStorage.setItem(dbKey, JSON.stringify(data));
+  },
 
-	deleteItem(id, dbKey) {  
-		const data = JSON.parse(localStorage.getItem(dbKey));
-		const index = data.findIndex(
-			todoItem => todoItem.itemId === +id
-		);
+  changeCompleted(itemId, dbKey, status) {
+    const data = JSON.parse(localStorage.getItem(dbKey));
+    const currentItem = data.find((todoItem) => todoItem.itemId === +itemId);
 
-		data.splice(index, 1);
+    currentItem.completed = status;
 
-		localStorage.setItem(
-			dbKey,
-			JSON.stringify(data)
-		)
-	},
+    localStorage.setItem(dbKey, JSON.stringify(data));
+  },
 
-	clearStorage(dbKey) {
-		localStorage.removeItem(dbKey);
-	},
+  clearStorage(dbKey) {
+    localStorage.removeItem(dbKey);
+  },
 
-	init(controllerInstance) {
-		this.controller = controllerInstance;
-	}
-}
+  init(controllerInstance) {
+    this.controller = controllerInstance;
+  },
+};

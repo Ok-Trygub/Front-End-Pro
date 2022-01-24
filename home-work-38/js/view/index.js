@@ -1,117 +1,74 @@
-// View
-
 "use strict";
+
 const view = {
   controller: null,
   formId: null,
-  todosContainerId: null,
   form: null,
+  todoContainerId: null,
   todoContainer: null,
-  currentItemId: 0,
+  currentItemId: null,
   removeAllBtn: null,
 
-  getId(objKey, Id) {
-    if (!Id) throw new Error("No ID!");
-    this[objKey] = Id;
+  getObjKeyValues(formId, containerId) {
+    if (!formId) throw new Error("No formId!");
+    if (!containerId) throw new Error("No containerId!");
+
+    this.formId = formId;
+    this.containerId = containerId;
+
+    this.form = document.getElementById(formId);
+    if (this.form.nodeName !== "FORM")
+      throw new Error("There is no such form on the page");
+
+    this.todoContainer = document.getElementById(containerId);
   },
 
-  getElement(objKey, elemId) {
-    if (!elemId) throw new Error("No element ID!");
-    this[objKey] = document.getElementById(elemId);
+  getRemoveAllBtn() {
+    this.removeAllBtn = this.form.querySelector(".remove-all");
   },
-
-	getRemoveAllBtn() {
-		this.removeAllBtn = this.form.querySelector('.remove-all');
-},
 
   setEvents() {
-    this.form.addEventListener(
-			"submit", 
-		this.formHandler.bind(this)
-		);
+    this.form.addEventListener("submit", this.formHandler.bind(this));
+
+    document.addEventListener("DOMContentLoaded", this.prefillForm.bind(this));
+
+    this.todoContainer.addEventListener("click", this.removeElement.bind(this));
+
+    this.removeAllBtn.addEventListener("click", this.removeAllTodos.bind(this));
 
     this.todoContainer.addEventListener(
       "change",
       this.checkTodoItem.bind(this)
     );
+  },
 
-		this.todoContainer.addEventListener(
-			'click',
-			this.removeElement.bind(this)
-  	),
+  prefillForm() {
+    const data = this.controller.getData(this.formId);
 
-	  this.removeAllBtn.addEventListener(
-		'click',
-		this.removeAll.bind(this)
-    )
+    if (!data || !data.length) return;
+
+    data.forEach((item) => {
+      this.todoContainer.prepend(this.createTemplate(item));
+    });
   },
 
   formHandler(event) {
     event.preventDefault();
     ++this.currentItemId;
 
-    const data = this.findInputsData();
-    console.log(data);
+    let data = {
+      id: this.formId,
+      completed: false,
+      itemId: this.currentItemId,
 
-    data.itemId = this.currentItemId;
-    console.log(data);
+      ...this.findInputs(),
+    };
 
-    data.id = this.formId;
+    this.controller.saveData(data);
 
-    this.controller.setData(data, this.formId);
+    this.todoContainer.append(this.createTemplate(data));
 
-    this.todoContainer.prepend(this.createTemplate(data));
     event.target.reset();
-  },
-
-  prefillData() {
-    const data = this.controller.getData(this.formId);
-
-    if (data === null || data.length === 0) return;
-
-    this.currentItemId = data[data.length - 1].itemId;
-
-    data.forEach((toDoItem) => {
-      this.todoContainer.prepend(this.createTemplate(toDoItem));
-    });
-  },
-
-  	checkTodoItem({target}) {
-  		const itemId = target.getAttribute('data-item-id');
-  		console.log(itemId);
-			console.log(target);
-  		const status = target.checked;
-
-  		this.controller.changeCompleted(
-  				itemId,
-  				this.formId,
-  				status
-  		);
-  },
-
-  removeElement({ target }) { 
-				 if(!target.classList.contains('delete-btn')) return;
-		
-  		this.controller.removeElement(
-  			target.getAttribute('data-item-id'), 
-  			this.formId
-  		)
-
-  		target.closest('.taskWrapper').parentElement.remove()
-  	},
-
-  	removeAll() {
-  		this.controller.removeAll(this.formId);
-  		this.todoContainer.innerHTML = '';
-  	},
-
-  findInputsData() {
-    return Array.from(
-      this.form.querySelectorAll("input[type=text], textarea")
-    ).reduce((acc, item) => {
-      acc[item.name] = item.value;
-      return acc;
-    }, {});
   },
 
   createTemplate({ title, description, itemId, completed }) {
@@ -141,16 +98,44 @@ const view = {
     return wrapper;
   },
 
-  init(controllerInstance) {
-    this.controller = controllerInstance;
+  checkTodoItem({ target }) {
+    const itemId = target.getAttribute("data-item-id");
+    const status = target.checked;
 
-    this.getId("formId", "todoForm");
-    this.getId("todosContainerId", "todoItems");
-    this.getElement("form", this.formId);
-    this.getElement("todoContainer", this.todosContainerId);
-		this.getRemoveAllBtn();
-		this.setEvents();
-		this.prefillData();
- 
+    this.controller.changeCompleted(itemId, this.formId, status);
+  },
+
+  removeElement({ target }) {
+
+    if (!target.classList.contains("delete-btn")) return;
+
+    this.controller.removeItem(
+      this.formId,
+      target.getAttribute("data-item-id")
+    );
+
+    target.closest(".taskWrapper").parentElement.remove();
+  },
+
+  removeAllTodos() {
+    this.controller.removeAll(this.formId);
+    this.todoContainer.innerHTML = "";
+  },
+
+  findInputs() {
+    return Array.from(
+      this.form.querySelectorAll("input[type=text], textarea")
+    ).reduce((acc, { name, value }) => {
+      acc[name] = value;
+      return acc;
+    }, {});
+  },
+
+  init(controllerInstance) {
+    this.getObjKeyValues("todoForm", "todoItems");
+    this.getRemoveAllBtn();
+    this.setEvents();
+
+    this.controller = controllerInstance;
   },
 };
