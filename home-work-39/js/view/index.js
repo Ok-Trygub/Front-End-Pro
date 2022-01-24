@@ -1,181 +1,193 @@
 "use strict";
 
 const view = {
-  controller: null,
-  formId: null,
-  form: null,
-  todoContainerId: null,
-  todoContainer: null,
-  currentItemId: null,
-  removeAllBtn: null,
+	controller: null,
+	formId: null,
+	form: null,
+	todoContainerId: null,
+	todoContainer: null,
+	currentItemId: null,
+	removeAllBtn: null,
 
-  getObjKeyValues(formId, containerId) {
-    if (!formId) throw new Error("No formId!");
-    if (!containerId) throw new Error("No containerId!");
+	getObjKeyValues(formId, containerId) {
+		if (!formId) throw new Error("No formId!");
+		if (!containerId) throw new Error("No containerId!");
 
-    this.formId = formId;
-    this.containerId = containerId;
+		this.formId = formId;
+		this.containerId = containerId;
 
-    this.form = document.getElementById(formId);
-    if (this.form.nodeName !== "FORM")
-      throw new Error("There is no such form on the page");
+		this.form = document.getElementById(formId);
+		if (this.form.nodeName !== "FORM")
+			throw new Error("There is no such form on the page");
 
-    this.todoContainer = document.getElementById(containerId);
-  },
+		this.todoContainer = document.getElementById(containerId);
+	},
 
-  getRemoveAllBtn() {
-    this.removeAllBtn = this.form.querySelector(".remove-all");
-  },
+	getRemoveAllBtn() {
+		this.removeAllBtn = this.form.querySelector(".remove-all");
+	},
 
-  setEvents() {
-    this.form.addEventListener("submit", this.formHandler.bind(this));
+	setEvents() {
+		this.form.addEventListener("submit", this.formHandler.bind(this));
 
-    document.addEventListener("DOMContentLoaded", this.prefillForm.bind(this));
+		document.addEventListener("DOMContentLoaded", this.prefillForm.bind(this));
 
-    this.todoContainer.addEventListener("click", this.removeElement.bind(this));
+		this.todoContainer.addEventListener("click", this.removeElement.bind(this));
 
-    this.removeAllBtn.addEventListener("click", this.removeAllTodos.bind(this));
+		this.removeAllBtn.addEventListener("click", this.removeAllTodos.bind(this));
 
-    this.todoContainer.addEventListener(
-      "change",
-      this.checkTodoItem.bind(this)
-    );
-  },
+		this.todoContainer.addEventListener(
+			"change",
+			this.checkTodoItem.bind(this)
+		);
+	},
 
-  prefillForm() {
-    const data = this.controller.getData(this.formId);
+	prefillForm() {
+		const data = this.controller.getData(this.formId);
 
-    if (!data || !data.length) return;
+		console.log(data);
 
-    data.forEach((item) => {
-      this.todoContainer.prepend(this.createTemplate(item));
-    });
-  },
+		if (!data || !data.length) return;
 
-  formHandler(event) {
-    event.preventDefault();
-    ++this.currentItemId;
+		const iterator = data[Symbol.iterator]();
 
-    let data = {
-      id: this.formId,
-      completed: false,
-      itemId: this.currentItemId,
 
-      ...this.findInputs(),
-    };
+		let item = iterator.next();
 
-    this.controller.saveData(data);
+		while (!iterator.done) {
+			const element = item.value;
+			console.log(element);
+			if (item.done) break;
 
-    this.todoContainer.append(this.createTemplate(data));
+			this.todoContainer.prepend(this.createTemplate(element));
+			item = iterator.next();
+		}
+	},
 
-    event.target.reset();
-  },
+	formHandler(event) {
+		event.preventDefault();
+		++this.currentItemId;
 
-  createTemplate({ title, description, itemId, completed }) {
-    const todoItem = this.createElement("div", "col-4");
-    const taskWrapper = this.createElement("div", "taskWrapper");
-    todoItem.append(taskWrapper);
+		let data = {
+			id: this.formId,
+			completed: false,
+			itemId: this.currentItemId,
 
-    const taskHeading = this.createElement("div", "taskHeading", title);
-    const taskDescription = this.createElement(
-      "div",
-      "taskDescription",
-      description
-    );
+			...this.findInputs(),
+		};
 
-    taskWrapper.append(taskHeading);
-    taskWrapper.append(taskDescription);
+		this.controller.saveData(data);
 
-    const hr = this.createElement("hr");
-    taskWrapper.append(hr);
+		this.todoContainer.append(this.createTemplate(data));
 
-    const label = this.createElement("label", ["completed", "form-check"]);
-    taskWrapper.append(label);
+		event.target.reset();
+	},
 
-    const input = this.createElement("input", "form-check-input");
-    input.setAttribute("type", "checkbox");
-    input.setAttribute("data-item-id", itemId);
-    label.append(input);
+	createTemplate({ title, description, itemId, completed }) {
+		const todoItem = this.createElement("div", "col-4");
+		const taskWrapper = this.createElement("div", "taskWrapper");
+		todoItem.append(taskWrapper);
 
-    const span = this.createElement("span");
-    span.innerHTML = "Завершено?";
-    label.append(span);
+		const taskHeading = this.createElement("div", "taskHeading", title);
+		const taskDescription = this.createElement(
+			"div",
+			"taskDescription",
+			description
+		);
 
-    const hr2 = this.createElement("hr");
-    taskWrapper.append(hr2);
+		taskWrapper.append(taskHeading);
+		taskWrapper.append(taskDescription);
 
-    const btn = this.createElement("button", [
-      "btn",
-      "btn-danger",
-      "delete-btn",
-    ]);
+		const hr = this.createElement("hr");
+		taskWrapper.append(hr);
 
-    btn.setAttribute("data-item-id", itemId);
-    btn.innerHTML = "Удалить?";
-    taskWrapper.append(btn);
+		const label = this.createElement("label", ["completed", "form-check"]);
+		taskWrapper.append(label);
 
-    todoItem.querySelector("input[type=checkbox]").checked = completed;
+		const input = this.createElement("input", "form-check-input");
+		input.setAttribute("type", "checkbox");
+		input.setAttribute("data-item-id", itemId);
+		label.append(input);
 
-    return todoItem;
-  },
+		const span = this.createElement("span");
+		span.innerHTML = "Завершено?";
+		label.append(span);
 
-  createElement(nodeName, classes, innerContent) {
-    const el = document.createElement(nodeName);
+		const hr2 = this.createElement("hr");
+		taskWrapper.append(hr2);
 
-    if (!classes && !innerContent) return el;
+		const btn = this.createElement("button", [
+			"btn",
+			"btn-danger",
+			"delete-btn",
+		]);
 
-    if (Array.isArray(classes)) {
-      classes.forEach((singleClassName) => {
-        el.classList.add(singleClassName);
-      });
-    } else {
-      el.classList.add(classes);
-    }
+		btn.setAttribute("data-item-id", itemId);
+		btn.innerHTML = "Удалить?";
+		taskWrapper.append(btn);
 
-    if (innerContent) {
-      el.innerHTML = innerContent;
-    }
+		todoItem.querySelector("input[type=checkbox]").checked = completed;
 
-    return el;
-  },
+		return todoItem;
+	},
 
-  checkTodoItem({ target }) {
-    const itemId = target.getAttribute("data-item-id");
-    const status = target.checked;
+	createElement(nodeName, classes, innerContent) {
+		const el = document.createElement(nodeName);
 
-    this.controller.changeCompleted(itemId, this.formId, status);
-  },
+		if (!classes && !innerContent) return el;
 
-  removeElement({ target }) {
-    if (!target.classList.contains("delete-btn")) return;
+		if (Array.isArray(classes)) {
+			classes.forEach((singleClassName) => {
+				el.classList.add(singleClassName);
+			});
+		} else {
+			el.classList.add(classes);
+		}
 
-    this.controller.removeItem(
-      this.formId,
-      target.getAttribute("data-item-id")
-    );
+		if (innerContent) {
+			el.innerHTML = innerContent;
+		}
 
-    target.closest(".taskWrapper").parentElement.remove();
-  },
+		return el;
+	},
 
-  removeAllTodos() {
-    this.controller.removeAll(this.formId);
-    this.todoContainer.innerHTML = "";
-  },
+	checkTodoItem({ target }) {
+		const itemId = target.getAttribute("data-item-id");
+		const status = target.checked;
 
-  findInputs() {
-    return Array.from(
-      this.form.querySelectorAll("input[type=text], textarea")
-    ).reduce((acc, { name, value }) => {
-      acc[name] = value;
-      return acc;
-    }, {});
-  },
+		this.controller.changeCompleted(itemId, this.formId, status);
+	},
 
-  init(controllerInstance) {
-    this.getObjKeyValues("todoForm", "todoItems");
-    this.getRemoveAllBtn();
-    this.setEvents();
+	removeElement({ target }) {
+		if (!target.classList.contains("delete-btn")) return;
 
-    this.controller = controllerInstance;
-  },
+		this.controller.removeItem(
+			this.formId,
+			target.getAttribute("data-item-id")
+		);
+
+		target.closest(".taskWrapper").parentElement.remove();
+	},
+
+	removeAllTodos() {
+		this.controller.removeAll(this.formId);
+		this.todoContainer.innerHTML = "";
+	},
+
+	findInputs() {
+		return Array.from(
+			this.form.querySelectorAll("input[type=text], textarea")
+		).reduce((acc, { name, value }) => {
+			acc[name] = value;
+			return acc;
+		}, {});
+	},
+
+	init(controllerInstance) {
+		this.getObjKeyValues("todoForm", "todoItems");
+		this.getRemoveAllBtn();
+		this.setEvents();
+
+		this.controller = controllerInstance;
+	},
 };
