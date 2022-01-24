@@ -36,10 +36,7 @@ const view = {
 
     this.removeAllBtn.addEventListener("click", this.removeAllTodos.bind(this));
 
-    this.todoContainer.addEventListener(
-      "change",
-      this.checkTodoItem.bind(this)
-    );
+    this.todoContainer.addEventListener("change", this.checkTodoItem.bind(this));
   },
 
   prefillForm() {
