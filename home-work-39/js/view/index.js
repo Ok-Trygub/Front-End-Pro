@@ -36,7 +36,10 @@ const view = {
 
     this.removeAllBtn.addEventListener("click", this.removeAllTodos.bind(this));
 
-    this.todoContainer.addEventListener("change", this.checkTodoItem.bind(this));
+    this.todoContainer.addEventListener(
+      "change",
+      this.checkTodoItem.bind(this)
+    );
   },
 
   prefillForm() {
@@ -69,30 +72,71 @@ const view = {
   },
 
   createTemplate({ title, description, itemId, completed }) {
-    const wrapper = document.createElement("div");
-    wrapper.classList.add("col-4");
+    const todoItem = this.createElement("div", "col-4");
+    const taskWrapper = this.createElement("div", "taskWrapper");
+    todoItem.append(taskWrapper);
 
-    let wrapInnerContent = '<div class="taskWrapper">';
-    wrapInnerContent += `<div class="taskHeading">${title}</div>`;
-    wrapInnerContent += `<div class="taskDescription">${description}</div>`;
+    const taskHeading = this.createElement("div", "taskHeading", title);
+    const taskDescription = this.createElement(
+      "div",
+      "taskDescription",
+      description
+    );
 
-    wrapInnerContent += `<hr>`;
-    wrapInnerContent += `<label class="completed form-check">`;
+    taskWrapper.append(taskHeading);
+    taskWrapper.append(taskDescription);
 
-    wrapInnerContent += `<input data-item-id="${itemId}" type="checkbox" class="form-check-input" >`;
-    wrapInnerContent += `<span>Завершено ?</span>`;
-    wrapInnerContent += `</label>`;
+    const hr = this.createElement("hr");
+    taskWrapper.append(hr);
 
-    wrapInnerContent += `<hr>`;
-    wrapInnerContent += `<button class="btn btn-danger delete-btn" data-item-id="${itemId}">Удалить</button>`;
+    const label = this.createElement("label", ["completed", "form-check"]);
+    taskWrapper.append(label);
 
-    wrapInnerContent += "</div>";
+    const input = this.createElement("input", "form-check-input");
+    input.setAttribute("type", "checkbox");
+    input.setAttribute("data-item-id", itemId);
+    label.append(input);
 
-    wrapper.innerHTML = wrapInnerContent;
+    const span = this.createElement("span");
+    span.innerHTML = "Завершено?";
+    label.append(span);
 
-    wrapper.querySelector("input[type=checkbox]").checked = completed;
+    const hr2 = this.createElement("hr");
+    taskWrapper.append(hr2);
 
-    return wrapper;
+    const btn = this.createElement("button", [
+      "btn",
+      "btn-danger",
+      "delete-btn",
+    ]);
+
+    btn.setAttribute("data-item-id", itemId);
+    btn.innerHTML = "Удалить?";
+    taskWrapper.append(btn);
+
+    todoItem.querySelector("input[type=checkbox]").checked = completed;
+
+    return todoItem;
+  },
+
+  createElement(nodeName, classes, innerContent) {
+    const el = document.createElement(nodeName);
+
+    if (!classes && !innerContent) return el;
+
+    if (Array.isArray(classes)) {
+      classes.forEach((singleClassName) => {
+        el.classList.add(singleClassName);
+      });
+    } else {
+      el.classList.add(classes);
+    }
+
+    if (innerContent) {
+      el.innerHTML = innerContent;
+    }
+
+    return el;
   },
 
   checkTodoItem({ target }) {
@@ -103,7 +147,6 @@ const view = {
   },
 
   removeElement({ target }) {
-
     if (!target.classList.contains("delete-btn")) return;
 
     this.controller.removeItem(
