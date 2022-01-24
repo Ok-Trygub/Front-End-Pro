@@ -45,13 +45,9 @@ const view = {
 	prefillForm() {
 		const data = this.controller.getData(this.formId);
 
-		console.log(data);
-
 		if (!data || !data.length) return;
 
 		const iterator = data[Symbol.iterator]();
-
-
 		let item = iterator.next();
 
 		while (!iterator.done) {
