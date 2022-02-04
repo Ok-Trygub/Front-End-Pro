@@ -17,31 +17,9 @@ const model = {
     localStorage.setItem(dbKey, JSON.stringify(existingData));
   },
 
-
-
-
-
-
-
-
   getData(dbKey) {
     return JSON.parse(localStorage.getItem(dbKey));
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
   removeItem(dbKey, itemId) {
     const data = JSON.parse(localStorage.getItem(dbKey));
