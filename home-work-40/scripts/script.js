@@ -7,7 +7,7 @@ let cache = new Map();
 
 
 function cacheAbility(func, ...args) {
-	let resOfFunc = func(...args)
+	const resOfFunc = func(...args)
 
 	if (resOfFunc in cache) {
 
@@ -17,10 +17,10 @@ function cacheAbility(func, ...args) {
 	}
 	else {
 		console.log('Calculating result');
-		let sum = resOfFunc + 10;
-		cache.set(resOfFunc, sum)
+		const sum = resOfFunc + 10;
+		cache.set(resOfFunc, sum);;
 
-		console.log(cache)
+		console.log(cache);
 
 	}
 
@@ -28,9 +28,9 @@ function cacheAbility(func, ...args) {
 		let removeItem = Array.from(cache.keys()).shift();
 
 		cache.delete(removeItem);
-		console.log(cache)
+		console.log(cache);
 	}
-	return cache
+	return cache;
 }
 
 
