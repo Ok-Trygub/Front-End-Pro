@@ -6,7 +6,7 @@ let cache = new Map();
 
 
 
-function memoizedAdd(func, ...args) {
+function cacheAbility(func, ...args) {
 	let resOfFunc = func(...args)
 
 	if (resOfFunc in cache) {
@@ -35,18 +35,18 @@ function memoizedAdd(func, ...args) {
 
 
 
-memoizedAdd(mult, 5, 5);
-memoizedAdd(mult, 5, 7);
-memoizedAdd(mult, 1, 7);
-memoizedAdd(mult, 3, 7);
-memoizedAdd(mult, 8, 7);
-memoizedAdd(mult, 33, 7);
-memoizedAdd(mult, 9, 7);
-memoizedAdd(mult, 11, 7);
-memoizedAdd(mult, 12, 7);
-memoizedAdd(mult, 16, 7);
+cacheAbility(mult, 5, 5);
+cacheAbility(mult, 5, 7);
+cacheAbility(mult, 1, 7);
+cacheAbility(mult, 3, 7);
+cacheAbility(mult, 8, 7);
+cacheAbility(mult, 33, 7);
+cacheAbility(mult, 9, 7);
+cacheAbility(mult, 11, 7);
+cacheAbility(mult, 12, 7);
+cacheAbility(mult, 16, 7);
 
 
-memoizedAdd(mult, 25, 7);
-memoizedAdd(mult, 35, 7);
-memoizedAdd(mult, 45, 7);
+cacheAbility(mult, 25, 7);
+cacheAbility(mult, 35, 7);
+cacheAbility(mult, 45, 7);
