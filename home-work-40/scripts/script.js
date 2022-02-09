@@ -18,7 +18,7 @@ function cacheAbility(func, ...args) {
 	else {
 		console.log('Calculating result');
 		const sum = resOfFunc + 10;
-		cache.set(resOfFunc, sum);;
+		cache.set(resOfFunc, sum);
 
 		console.log(cache);
 
