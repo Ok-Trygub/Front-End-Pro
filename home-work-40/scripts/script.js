@@ -5,31 +5,22 @@ function mult(a, b) {
 let cache = new Map();
 
 
-
 function cacheAbility(func, ...args) {
 	const resOfFunc = func(...args);
 
 	if (resOfFunc in cache) {
-
-		console.log('Fetching from cache');
-		console.log(cache)
 		return cache;
 	}
-	else {
-		console.log('Calculating result');
-		const sum = resOfFunc + 10;
-		cache.set(resOfFunc, sum);
 
-		console.log(cache);
+	const sum = resOfFunc + 10;
+	cache.set(resOfFunc, sum);
 
-	}
 
 	if (cache.size > 10) {
 		let removeItem = Array.from(cache.keys()).shift();
-
 		cache.delete(removeItem);
-		console.log(cache);
 	}
+
 	return cache;
 }
 
