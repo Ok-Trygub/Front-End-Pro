@@ -9,7 +9,7 @@ class Human {
 
 	validateNameData(value) {
 		if (value.trim().length < 3) {
-			throw new Error('Name should contain more than 3 characters!');
+			throw new Error('Name/Surname should contain more than 3 characters!');
 		}
 		return true;
 	}
