@@ -9,11 +9,11 @@ function Student(name, surname, yearOfBirth) {
 	this.marks = new Array(10);
 
 
-	this.age = function () {
+	Student.prototype.age = function () {
 		return (new Date().getFullYear()) - this.yearOfBirth;
 	};
 
-	this.addProgressArr = function (arr, value) {
+	Student.prototype.addProgressArr = function (arr, value) {
 
 		if (arr[arr.length - 1] !== undefined) throw new Error('Array is full!');
 
@@ -28,24 +28,24 @@ function Student(name, surname, yearOfBirth) {
 		return value;
 	};
 
-	this.present = function () {
+	Student.prototype.present = function () {
 		this.addProgressArr(this.visits, true);
 	};
 
-	this.absent = function () {
+	Student.prototype.absent = function () {
 		this.addProgressArr(this.visits, false);
 	};
 
-	this.mark = function (point) {
+	Student.prototype.mark = function (point) {
 
 		if (typeof (point) !== 'number') throw new Error('Mark should be number!')
 		if (point > 10) throw new Error('Mark should be less or equal 10!')
 
-		this.addProgressArr(this.marks, point);
+		Student.prototype.addProgressArr(this.marks, point);
 
 	};
 
-	this.getAverageMarks = function () {
+	Student.prototype.getAverageMarks = function () {
 
 		if (this.marks[0] === undefined) throw new Error('Array with marks is empty!');
 
@@ -62,7 +62,7 @@ function Student(name, surname, yearOfBirth) {
 		return averageMarks;
 	};
 
-	this.summary = function () {
+	Student.prototype.summary = function () {
 
 		if (this.visits[0] === undefined) throw new Error('Array with visits is empty!');
 
