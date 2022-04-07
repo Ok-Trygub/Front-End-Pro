@@ -14,5 +14,4 @@ const app = (() => {
 		TodoListModel
 	)
 	return controller;
-
 })();
