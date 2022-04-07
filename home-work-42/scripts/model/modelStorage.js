@@ -1,8 +1,4 @@
 class ModelStorage {
-	// dbKey = null;
-
-
-
 	#hasItem() {
 		let data = localStorage.getItem(this.dbKey);
 
@@ -38,6 +34,4 @@ class ModelStorage {
 	_clearAll() {
 		localStorage.removeItem(this.dbKey);
 }
-
-
 }

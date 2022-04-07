@@ -8,18 +8,11 @@ const app = (() => {
 		removeBtn: '.remove-all'
 	}
 
-
 	const controller = new TodoListController(
 		formConfiguration,
 		TodoListView,
 		TodoListModel
 	)
-
-
-	// console.log(controller);
-
-
 	return controller;
 
 })();
-

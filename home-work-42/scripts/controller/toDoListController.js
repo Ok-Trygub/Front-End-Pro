@@ -224,7 +224,6 @@ class TodoListController {
 		if (!this.#model.hasItem()) return;
 
 		const data = [...this.#model.getData()];
-		console.log(data)
 
 		for (const todoItem of data) {
 			this.#view.renderItem(todoItem);
