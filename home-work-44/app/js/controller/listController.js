@@ -17,6 +17,7 @@ class ListController {
 
 
 		this.#setWindowOnloadEvent();
+		this.setChooseCurrentAlbum();
 
 		this._API_URL = listConfiguration.API_URL;
 	}
@@ -81,8 +82,6 @@ class ListController {
 					this.#view.renderList(listItem);
 				});
 			})
-
-		this.setChooseCurrentAlbum();
 	}
 
 	#setWindowOnloadEvent() {
