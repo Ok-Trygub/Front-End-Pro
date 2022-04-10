@@ -1,0 +1,32 @@
+ /* Regular */
+
+ @font-face {
+	font-family: "TTNorms";
+	src: local("TTNorms"), url("../fonts/TTNorms-Regular.ttf") format("truetype"),
+		url("../fonts/TTNorms-Regular.eot?#iefix") format("embedded-opentype"),
+		url("../fonts/TTNorms-Regular.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+}
+
+/* Bold */
+
+@font-face {
+	font-family: "TTNorms";
+	src: local("TTNorms"), url("../fonts/TTNorms-Bold.ttf") format("truetype"),
+		url("../fonts/TTNorms-Bold.eot?#iefix") format("embedded-opentype"),
+		url("../fonts/TTNorms-Bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal;
+}
+
+/* Medium */
+
+@font-face {
+	font-family: "TTNorms";
+	src: local("TTNorms"), url("../fonts/TTNorms-Medium.ttf") format("truetype"),
+		url("../fonts/TTNorms-Medium.eot?#iefix") format("embedded-opentype"),
+		url("../fonts/TTNorms-Medium.woff") format("woff");
+	font-weight: 500;
+	font-style: normal;
+}

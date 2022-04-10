@@ -1,0 +1,15 @@
+.albums {
+	&__title {
+		margin: 20px 0 20px;
+		color: darkblue;
+	}
+
+	&__item{
+		padding: 10px 16px;
+	}
+
+	&__item:hover,
+	&__item:active {
+		color: blue;
+	}
+}
