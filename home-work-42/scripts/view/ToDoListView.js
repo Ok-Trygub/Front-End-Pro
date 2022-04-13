@@ -9,12 +9,12 @@ class TodoListView {
 
 	setForm(formNode) {
 		if (this.#form) throw new Error('Form already defined');
-		this.#form = formNode;  // <form id="todoForm">...</form>
+		this.#form = formNode;
 	}
 
 	setTodoContainer(containerNode) {
 		if (this.#todoItemsContainer) throw new Error('Todo Container already defined');
-		this.#todoItemsContainer = containerNode;  // <div class="row" id="todoItems">...</div>
+		this.#todoItemsContainer = containerNode;
 	}
 
 	showInputsError(inputNode) {
@@ -44,7 +44,7 @@ class TodoListView {
 	_createTemplate({ title, description, itemId, completed }) {
 		const todoItem = this.createElement("div", "col-4");
 		const taskWrapper = this.createElement("div", "taskWrapper");
-		taskWrapper.setAttribute(`data-todo-item-${itemId}`, '');
+		todoItem.setAttribute(`data-todo-item-${itemId}`, '');
 		todoItem.append(taskWrapper);
 
 		const taskHeading = this.createElement("div", "taskHeading", title);
