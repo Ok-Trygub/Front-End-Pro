@@ -1,6 +1,6 @@
 'use strict';
 
-const app = (() => {
+const list_app = (() => {
 
 	const listConfiguration = {
 		list: '#listItems',
@@ -10,7 +10,8 @@ const app = (() => {
 	const controller = new ListController(
 		listConfiguration,
 		ListView,
-		ListModel
+		ListModel,
 	)
 	return controller;
-})();
+}
+)();

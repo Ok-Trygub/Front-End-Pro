@@ -13359,11 +13359,11 @@ a:hover {
 
 .albums__title {
   margin: 20px 0 20px;
-  color: darkblue;
+  color: blue;
 }
 .albums__item {
   padding: 10px 16px;
 }
-.albums__item:hover, .albums__item:active {
+.albums__item a:hover, .albums__item a:active {
   color: blue;
 }

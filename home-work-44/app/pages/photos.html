@@ -2,35 +2,33 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>PHOTOS</title>
-	<link rel="stylesheet" href="../styles/photos.min.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHOTOS</title>
+    <link rel="stylesheet" href="../styles/photos.min.css">
 </head>
 
 <body>
-	<header class="nav">
-		<nav class="navbar navbar-light bg-light">
-			<div class="container-fluid nav__container">
-				<span class="navbar-brand mb-0 h1 fw-bold">Albums/Photos</span>
-			</div>
-		</nav>
-	</header>
+<header class="nav">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid nav__container">
+            <span class="navbar-brand mb-0 h1 fw-bold">Album/Photos</span>
+        </div>
+    </nav>
+</header>
 
-	<main>
+<main>
 
+    <div class="container d-flex flex-wrap" id="photosContainer">
+    </div>
 
-		<!-- <img src="../images/download.jpeg" class="img-thumbnail" alt="...">
-		<img src="../images/download.png" class="img-thumbnail" alt="..."> -->
-
-
-
-
-	</main>
-	<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-
+</main>
+<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../scripts/views/PhotosView.js"></script>
+<script src="../scripts/models/PhotosModel.js"></script>
+<script src="../scripts/controllers/PhotosController.js"></script>
+<script src="../scripts/apps/photos_app.js"></script>
 </body>
 
 </html>
