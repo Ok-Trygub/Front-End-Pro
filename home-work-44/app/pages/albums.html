@@ -2,50 +2,43 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>ALBUMS</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="./../styles/albums.min.css">
+    <meta charset="UTF-8">
+    <title>ALBUMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./../styles/albums.min.css">
 </head>
 
 <body>
 
-	<header class="nav">
-		<nav class="navbar navbar-light bg-light">
-			<div class="container-fluid nav__container">
-				<span class="navbar-brand mb-0 h1 fw-bold">Albums</span>
-			</div>
-		</nav>
-	</header>
+<header class="nav">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid nav__container">
+            <span class="navbar-brand mb-0 h1 fw-bold">Albums</span>
+        </div>
+    </nav>
+</header>
 
-	<main>
+<main>
 
-		<div class="albums">
-			<div class="container">
+    <div class="albums">
+        <div class="container">
 
-				<div class="d-flex flex-column align-items-center">
-					<h2 class="albums__title fw-medium">Choose an album:</h2>
+            <div class="d-flex flex-column align-items-center">
+                <h2 class="albums__title fw-medium">Choose an album:</h2>
 
-					<ul class="list-group list-group-flush col-12 col-md-10 col-lg-6" id="listItems">
+                <ul class="list-group list-group-flush col-12 col-md-10 col-lg-6" id="listItems">
+                </ul>
+            </div>
+        </div>
+    </div>
 
-						<!-- <li class="list-group-item albums__item fw-medium"><a href="../pages/photos.html">An item</a></li>
-						<li class="list-group-item albums__item fw-medium"><a href="../pages/photos.html">An item</a></li>
-						<li class="list-group-item albums__item fw-medium"><a href="../pages/photos.html">An item</a></li>
-						<li class="list-group-item albums__item fw-medium"><a href="../pages/photos.html">An item</a></li>
-						<li class="list-group-item albums__item fw-medium"><a href="../pages/photos.html">An item</a></li> -->
+</main>
+<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-					</ul>
-				</div>
-			</div>
-		</div>
-
-	</main>
-	<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-	<script src="../scripts/controllers/ListController.js"></script>
-	<script src="../scripts/views/ListView.js"></script>
-	<script src="../scripts/models/ListModel.js"></script>
-	<script src="../scripts/apps/list_app.js"></script>
+<script src="../scripts/controllers/ListController.js"></script>
+<script src="../scripts/views/ListView.js"></script>
+<script src="../scripts/models/ListModel.js"></script>
+<script src="../scripts/apps/list_app.js"></script>
 
 </body>
 </html>
