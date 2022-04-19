@@ -56,32 +56,15 @@ class ListController {
         return this._list;
     }
 
-    windowOnloadHandler() {
-        async function getData(url) {
+    async windowOnloadHandler() {
+        let data = fetch(`${this.API_URL}/albums`);
 
-            let data = fetch(url, {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json, text/plain, */*',
-                }
-            })
+        let response = await data;
+        response = await response.json();
 
-            let response = await data;
-            response = await response.json();
-
-            return response;
-        }
-
-        let data = null;
-
-        getData(`${this.API_URL}/albums`)
-            .then(response => {
-                data = response
-
-                data.forEach(listItem => {
-                    this.#view.renderList(listItem);
-                });
-            })
+        response.forEach(listItem => {
+            this.#view.renderList(listItem);
+        })
     }
 
     #setWindowOnloadEvent() {

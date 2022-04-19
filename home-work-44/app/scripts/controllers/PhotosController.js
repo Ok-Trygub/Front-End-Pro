@@ -61,33 +61,17 @@ class PhotosController {
         return elem;
     }
 
-    windowOnloadHandler(event) {
+    async windowOnloadHandler(event) {
         event.preventDefault();
         event.stopPropagation();
 
-        async function getData(url) {
-            let photos = fetch(url, {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json, text/plain, */*',
-                }
-            })
-            let response = await photos;
-            response = await response.json();
+        let photos = await fetch(this.API_URL);
+        let response = await photos;
+        response = await response.json();
 
-            return response;
-        }
-
-        let photos = null;
-
-        getData(this.API_URL)
-            .then(response => {
-                photos = response
-
-                photos.forEach(item => {
-                    this.#view.renderPhoto(item);
-                })
-            })
+        response.forEach(item => {
+            this.#view.renderPhoto(item);
+        })
     }
 
     #setWindowOnloadEvent() {
