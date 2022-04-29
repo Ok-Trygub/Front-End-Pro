@@ -14,8 +14,6 @@ class PhotosView {
     createElement(nodeName, classes, innerContent) {
         const elem = document.createElement(nodeName);
 
-        if (!classes && !innerContent) return elem;
-
         if (!classes && innerContent) {
             elem.innerHTML = innerContent;
             return elem;
